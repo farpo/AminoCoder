@@ -12,7 +12,7 @@ public class Main {
     public static CodonManager codonManager;
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Amino terminal version 0.1");
+        System.out.println("Amino terminal version 1.0");
         System.out.println("Input \"ENCODE\" for encoding or \"DECODE\" for decoding");
         codonManager = CodonManager.getStandard();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -37,7 +37,7 @@ public class Main {
                 System.out.println("Switching to DECODE mode. Input phrase for decoding");
                 mode = "decode";
             } else {
-                System.out.println(mode.equalsIgnoreCase("encode") ? encode(input) : decode(input));
+                System.out.println(mode.equalsIgnoreCase("encode") ? encode(input.toLowerCase()) : decode(input.toUpperCase()));
             }
             System.out.println("Input another phrase or input \"STOP\" to stop the process");
         }
@@ -45,7 +45,15 @@ public class Main {
     }
 
     public static String encode(String input) {
-        char[] chars = input.toCharArray();
+
+        char[] chars = input.replace(".", "")
+                .replace("?", "")
+                .replace("!", "")
+                .replace(":", "")
+                .replace(",", "")
+                .replace("'", "")
+                .replace("`", "")
+                .toCharArray();
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < chars.length; i++) {
             char chair = chars[i];
